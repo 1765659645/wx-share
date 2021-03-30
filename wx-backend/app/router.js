@@ -11,4 +11,5 @@ module.exports = (app) => {
   router.put("/updateShare", controller.share.updateShare);
   router.delete("/deleteShare", controller.share.deleteShare);
   router.get("/queryShare", controller.share.queryShare);
+  router.post('/login', controller.user.login);
 };

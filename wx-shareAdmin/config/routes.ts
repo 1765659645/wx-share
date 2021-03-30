@@ -4,6 +4,10 @@
     component: '../layouts/BlankLayout',
     routes: [
       {
+        path: '/login',
+        component: './Login',
+      },
+      {
         path: '/',
         component: '../layouts/SecurityLayout',
         routes: [

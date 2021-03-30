@@ -43,6 +43,10 @@ module.exports = appInfo => {
     // myAppName: 'egg',
   };
 
+  config.jwt = {
+    secret: "xiong1314789"//自定义 token 的加密条件字符串
+  };
+
   // 跨域配置
   config.security = {
     csrf: {
