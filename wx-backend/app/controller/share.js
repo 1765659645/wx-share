@@ -30,14 +30,7 @@ class ShareController extends Controller {
 
   async updateShare() {
     const { ctx, app } = this;
-    const isExist = await app.mysql.get("share_data", {
-      shareKey: ctx.request.body.shareKey,
-    });
-    if (isExist) {
-      ctx.body = JSON.stringify("资源已存在");
-      ctx.status = 500;
-      return;
-    }
+
     const data = await app.mysql.update("share_data", {
       id: ctx.request.body.id,
       shareKey: ctx.request.body.shareKey,
