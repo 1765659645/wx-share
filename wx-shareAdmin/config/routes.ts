@@ -6,6 +6,7 @@
       {
         path: '/login',
         component: './Login',
+        name: '登录',
       },
       {
         path: '/',
