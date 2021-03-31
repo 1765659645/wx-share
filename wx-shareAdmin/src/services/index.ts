@@ -1,3 +1,4 @@
+import storage from '@/utils/storage';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'http://127.0.0.1:7001/'; //根据项目自己更改
@@ -5,7 +6,7 @@ axios.defaults.baseURL = 'http://127.0.0.1:7001/'; //根据项目自己更改
 axios.interceptors.request.use((config) => {
   //如果项目中有将token绑定在请求数据的头部，服务器可以有选择的返回数据，只对有效的请求返回数据，这样写
   //这里是用户登录的时候，将token写入了sessionStorage中了，之后进行其他的接口操作时，进行身份验证。
-  config.headers.Authorization = window.sessionStorage.getItem('token');
+  config.headers.Authorization = `Bearer ${storage.get('token')}`;
   return config;
 });
 //在response中

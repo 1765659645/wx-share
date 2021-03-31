@@ -9,29 +9,16 @@ import type {
   Settings,
 } from '@ant-design/pro-layout';
 import ProLayout, { DefaultFooter } from '@ant-design/pro-layout';
-import React, { useMemo, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import type { Dispatch } from 'umi';
 import { Link, useIntl, connect, history } from 'umi';
 import { GithubOutlined } from '@ant-design/icons';
-import { Result, Button } from 'antd';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import type { ConnectState } from '@/models/connect';
-import { getMatchMenu } from '@umijs/route-utils';
 import logo from '../assets/logo.svg';
+import storage from '@/utils/storage';
 
-const noMatch = (
-  <Result
-    status={403}
-    title="403"
-    subTitle="Sorry, you are not authorized to access this page."
-    extra={
-      <Button type="primary">
-        <Link to="/user/login">Go Login</Link>
-      </Button>
-    }
-  />
-);
 export type BasicLayoutProps = {
   breadcrumbNameMap: Record<string, MenuDataItem>;
   route: ProLayoutProps['route'] & {
@@ -109,16 +96,16 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       });
     }
   };
-  // get children authority
-  const authorized = useMemo(
-    () =>
-      getMatchMenu(location.pathname || '/', menuDataRef.current).pop() || {
-        authority: 'admin',
-      },
-    [location.pathname],
-  );
 
   const { formatMessage } = useIntl();
+
+  useEffect(() => {
+    const token = storage.get('token');
+    const currentUser = storage.get('currentUser');
+    if (!token || !currentUser) {
+      history.replace('/login');
+    }
+  });
 
   return (
     <ProLayout
@@ -170,9 +157,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         fontColor: 'rgba(24,144,255,0.15)',
       }}
     >
-      <Authorized authority={authorized!.authority} noMatch={noMatch}>
-        {children}
-      </Authorized>
+      {children}
     </ProLayout>
   );
 };

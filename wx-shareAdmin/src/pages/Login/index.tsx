@@ -1,8 +1,10 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
+import { history } from 'umi';
 import http from '@/services';
 import bgJpg from '@/assets/banner.jpg';
 import styles from './index.less';
+import storage from '@/utils/storage';
 
 const FormItem = Form.Item;
 
@@ -13,6 +15,11 @@ const Login: React.FC = () => {
     const values = form.getFieldsValue();
     console.log(values);
     const res = await http.post('login', values);
+    if (res.status === 200 && res.data) {
+      storage.set('token', res.data.token);
+      storage.set('currentUser', JSON.stringify(res.data.currentUser));
+      history.replace('/list');
+    }
     console.log(res);
   }
 

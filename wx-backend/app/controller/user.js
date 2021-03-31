@@ -13,7 +13,10 @@ class HomeController extends Controller {
         },
         app.config.jwt.secret
       );
-      ctx.body = JSON.stringify(token);
+      ctx.body = JSON.stringify({ token, currentUser: { account: "admin" } });
+    } else if (data.account !== "admin" || data.password !== "123") {
+      ctx.body = JSON.stringify("用户名或密码错误");
+      ctx.status = 401;
     }
   }
 }
