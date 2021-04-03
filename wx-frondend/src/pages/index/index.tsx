@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { View, Text, Ad, Input, Button } from "@tarojs/components";
 import Taro from "@tarojs/taro";
+import { TabBar } from "../../components";
 import "./index.less";
 
 export default class Index extends Component {
@@ -9,10 +10,15 @@ export default class Index extends Component {
     data: null,
     canViewShare: false,
     haveData: null,
+    tabName: "特定搜索",
   };
   componentWillMount() {}
 
-  componentDidMount() {}
+  componentDidMount() {
+    Taro.showShareMenu({
+      menus: ["shareAppMessage", "shareTimeline"],
+    });
+  }
 
   componentWillUnmount() {}
 
@@ -69,11 +75,11 @@ export default class Index extends Component {
   };
 
   handleClickViewAd = () => {
-    let videoAd: any = null;
-    videoAd = Taro.createRewardedVideoAd({
+    const videoAd = Taro.createRewardedVideoAd({
       adUnitId: "adunit-f24d86580f4cebc5",
     });
-    videoAd.onLoad(() => {
+
+    videoAd.load().then(() => {
       videoAd.show();
     });
 
@@ -81,14 +87,10 @@ export default class Index extends Component {
       Taro.showModal({
         title: "提示",
         content: "广告加载失败，请尝试重新观看广告",
-        success: () => {
-          videoAd.destroy();
-        },
       })
     );
 
     videoAd.onClose((res) => {
-      videoAd.destroy();
       if (res.isEnded) {
         this.setState({
           canViewShare: true,
@@ -122,7 +124,20 @@ export default class Index extends Component {
         </View>
 
         <Input className="input" onInput={this.handleInput} />
-        <Button className="query" onClick={this.handleClick}>
+        <Button
+          style={{
+            width: "30%",
+            borderRadius: "50px",
+            fontSize: "14px",
+            textAlign: "center",
+            margin: "5px auto 0",
+            color: "#fff",
+            height: "30px",
+            lineHeight: "30px",
+          }}
+          className="query"
+          onClick={this.handleClick}
+        >
           查询
         </Button>
         {haveData && (
@@ -167,6 +182,31 @@ export default class Index extends Component {
           </View>
         )}
         {haveData === false && <View>没有搜索到此资源相关信息</View>}
+        <View
+          style={{
+            position: "fixed",
+            width: "100%",
+            bottom: 0,
+            borderTop: "1px solid #e9e9e9",
+          }}
+        >
+          <TabBar
+            noSplit
+            dots={[]}
+            width="50%"
+            activeColor="#688aef"
+            style={{ fontWeight: 400, color: "#999" }}
+            defaultSelect={"特定搜索"}
+            options={["特定搜索", "网盘搜索"]}
+            onChange={(tabName) => {
+              if (tabName !== "特定搜索") {
+                Taro.redirectTo({
+                  url: "../baiduSearch/index",
+                });
+              }
+            }}
+          ></TabBar>
+        </View>
       </View>
     );
   }

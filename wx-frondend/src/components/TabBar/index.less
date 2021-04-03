@@ -1,0 +1,93 @@
+.tab-c {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 3em;
+  border-top: 0;
+  margin: 0 20px;
+
+  .tab-i {
+    text-align: center;
+    position: relative;
+    padding: 0 10rpx;
+    flex-shrink: 0;
+    box-sizing: border-box;
+
+    .dot {
+      position: absolute;
+      top: 4px;
+      right: 0;
+      width: 30px;
+      height: 30px;
+      background: rgba(253, 102, 77, 1);
+      border-radius: 50%;
+      font-size: 16px;
+      font-family: PingFang SC;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      line-height: 30px;
+      text-align: center;
+      transform: translateX(50%);
+      z-index: 99;
+    }
+
+    &::after {
+      content: " ";
+      position: absolute;
+      top: 12px;
+      right: -0;
+      background-color: rgba(205, 205, 205, 1);
+      width: 3px;
+      height: 31px;
+      transform: translate(0, 50%);
+    }
+
+    &:last-child {
+      &::after {
+        content: none;
+      }
+    }
+
+    &.no-split {
+      &::after {
+        content: none !important;
+      }
+    }
+
+    .tab-t {
+      border-bottom: 4px solid transparent;
+      width: max-content;
+      margin: auto;
+      padding: 0 8px;
+      color: #333;
+      font-size: 28px;
+      font-family: PingFang SC;
+      font-weight: bold;
+      position: relative;
+    }
+
+    &.active {
+      position: relative;
+
+      .tab-t {
+        color: #fe6148 !important;
+      }
+
+      .tab-active {
+        width: 40px;
+        height: 8px;
+        background: linear-gradient(
+          45deg,
+          rgba(255, 93, 67, 1) 0%,
+          rgba(247, 121, 98, 1) 100%
+        );
+        border-radius: 4px;
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+    }
+  }
+}
