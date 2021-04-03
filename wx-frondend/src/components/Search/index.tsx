@@ -38,7 +38,6 @@ const Search: React.FC<wSearchProps> = ({
       Taro.getStorage({
         key: "search_cache",
         success(res) {
-          console.log(res);
           let list = res.data;
           if (list.length > 5) {
             for (let item of list) {
@@ -64,7 +63,6 @@ const Search: React.FC<wSearchProps> = ({
 
   function keywordsClick(item, e) {
     //关键词搜索与历史搜索
-    console.log(item);
     setSearchText(item);
     searchStart();
   }

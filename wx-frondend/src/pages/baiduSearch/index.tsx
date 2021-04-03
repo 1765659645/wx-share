@@ -46,7 +46,6 @@ const BaiduSearch: React.FC = () => {
                 `搜索到${res.data.data.amount}条数据, 耗时${res.data.data.time}秒`
               );
             }
-            console.log(res.data);
           }
         },
         fail: (err) => {},
@@ -120,8 +119,6 @@ const BaiduSearch: React.FC = () => {
       }
     });
   }
-
-  console.log(searchData);
 
   return (
     <View
