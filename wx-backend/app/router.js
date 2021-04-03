@@ -12,4 +12,5 @@ module.exports = (app) => {
   router.delete("/deleteShare", jwt, controller.share.deleteShare);
   router.get("/queryShare", jwt, controller.share.queryShare);
   router.post("/login", controller.user.login);
+  router.get("/resource", controller.resource.index);
 };
